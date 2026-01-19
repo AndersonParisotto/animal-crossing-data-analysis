@@ -16,3 +16,12 @@ for filename in all_files:
 
 #imprimindo as chaves do dicionário para verificar os DataFrames carregados
 print(dataframe.keys())
+
+#verificando se os DataFrames foram carregados corretamente
+if not dataframes:
+    #caso nenhum arquivo tenha sido carregado
+    print("Nenhum arquivo CSV foi carregado.")
+else:
+    #imprimindo o número de linhas e colunas de cada DataFrame
+    for name, df in dataframe.items():
+        print(f"DataFrame '{name}' carregado com {len(df)} linhas e {len(df.columns)} colunas.")
