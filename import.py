@@ -1,27 +1,31 @@
+#código para importar múltiplos arquivos CSV de uma pasta usando pandas
 import pandas as pd
-#leitura de múltiplos arquivos CSV em um único DataFrame
+#biblioteca para manipulação de arquivos e diretórios
 import glob
+#biblioteca para operações do sistema operacional
+import os
 
-#definindo o caminho onde os arquivos CSV estão localizados
-path = './dados'
+#definindo o caminho da pasta onde os arquivos CSV estão localizados
+path = './dados' 
+#usando glob para encontrar todos os arquivos CSV na pasta especificada
 all_files = glob.glob(path + "/*.csv")
 
-#criando um dicionário para armazenar os DataFrames
-dataframe = {}
+#criando um dicionário para armazenar os dataframes
+dataframes = {}
+#lendo cada arquivo CSV e armazenando no dicionário com o nome do arquivo como chave
 for filename in all_files:
-    #extraindo o nome do arquivo sem a extensão para usar como chave no dicionário
-    name - filename.split('/')[-1].split('.')[0]
+    #extraindo o nome do arquivo sem a extensão para usar como chave
+    name = os.path.basename(filename).replace('.csv', '')
     #lendo o arquivo CSV e armazenando no dicionário
-    dataframe[name] = pd.read_csv(filenbame, index_col=None, header=0)
+    dataframes[name] = pd.read_csv(filename)
 
-#imprimindo as chaves do dicionário para verificar os DataFrames carregados
-print(dataframe.keys())
+#verificando os nomes dos dataframes importados
+print(dataframes.keys()) 
 
-#verificando se os DataFrames foram carregados corretamente
+#verificando o número de linhas e colunas de cada dataframe
 if not dataframes:
-    #caso nenhum arquivo tenha sido carregado
-    print("Nenhum arquivo CSV foi carregado.")
+    print("Erro: Nenhum arquivo CSV encontrado. Verifique o caminho da pasta!")
 else:
-    #imprimindo o número de linhas e colunas de cada DataFrame
-    for name, df in dataframe.items():
-        print(f"DataFrame '{name}' carregado com {len(df)} linhas e {len(df.columns)} colunas.")
+    #iterando sobre o dicionário para imprimir o tamanho de cada dataframe
+    for nome, df in dataframes.items():
+        print(f"Tabela: {nome} | Linhas: {len(df)} | Colunas: {len(df.columns)}")
